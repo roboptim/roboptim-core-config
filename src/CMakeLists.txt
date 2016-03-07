@@ -21,3 +21,4 @@ ADD_LIBRARY(roboptim-core-config SHARED ${HEADERS} ${ROBOPTIM_CORE_SRC})
 SET_TARGET_PROPERTIES(roboptim-core-config PROPERTIES
   COMPILE_FLAGS "-Droboptim_core_config_EXPORTS")
 PKG_CONFIG_USE_COMPILE_DEPENDENCY(roboptim-core-config roboptim-core)
+PKG_CONFIG_USE_DEPENDENCY(roboptim-core-config yaml-cpp)

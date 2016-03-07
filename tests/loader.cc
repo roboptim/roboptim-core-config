@@ -20,6 +20,8 @@
 #include <boost/make_shared.hpp>
 
 #include <roboptim/core/function.hh>
+#include <roboptim/core/config/loader.hh>
+#include <roboptim/core/function/constant.hh>
 
 using namespace roboptim;
 
@@ -30,9 +32,46 @@ boost::shared_ptr<boost::test_tools::output_test_stream> output;
 
 BOOST_FIXTURE_TEST_SUITE (core_config, TestSuiteConfiguration)
 
+template <typename T>
+std::string suffix ();
+
+template <>
+std::string suffix<EigenMatrixDense> ()
+{
+  return "";
+}
+
+template <>
+std::string suffix<EigenMatrixSparse> ()
+{
+  return "-sparse";
+}
+
 BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
 {
-  output = retrievePattern ("loader");
+  output = retrievePattern (std::string ("loader") + suffix<T> ());
+
+  ConfigLoader loader;
+  loader.load (std::string (TESTS_DATA_DIR) + "/loader.yaml");
+
+  typedef GenericConstantFunction<T> constantF_t;
+  typename constantF_t::vector_t v (1);
+  v[0] = 12.;
+  boost::shared_ptr<constantF_t> f = boost::make_shared<constantF_t> (v);
+
+  // Create problem.
+  typedef Solver<T> solver_t;
+  typename solver_t::problem_t pb (f);
+
+  // Initialize solver.
+  SolverFactory<solver_t> factory (std::string ("dummy") + suffix<T> (), pb);
+  solver_t& solver = factory ();
+  solver.parameters ().clear ();
+  (*output) << solver << std::endl;
+
+  // Apply loaded parameters
+  loader.apply (solver);
+  (*output) << solver << std::endl;
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());

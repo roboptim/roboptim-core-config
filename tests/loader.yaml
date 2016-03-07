@@ -1,0 +1,17 @@
+# Maximum number of iterations
+max-iterations: 100
+
+# A dummy vector
+dummy-vector: [1., 2., 3.]
+
+# A dummy boolean
+dummy-bool: true
+
+# Ipopt parameters
+ipopt:
+
+    # Output file
+    output_file: "ipopt.log"
+
+    # Tolerance
+    tol: 1.e-3

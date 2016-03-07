@@ -1,5 +1,5 @@
 Solver:
-  Plugin: dummy
+  Plugin: dummy-sparse
   Problem:
     Constant function
       offset = [1](12)
@@ -9,7 +9,7 @@ Solver:
     No starting point.
     Infinity value (for all functions): inf
 Solver:
-  Plugin: dummy
+  Plugin: dummy-sparse
   Problem:
     Constant function
       offset = [1](12)
