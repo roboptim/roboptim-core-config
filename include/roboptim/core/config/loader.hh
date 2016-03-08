@@ -62,15 +62,30 @@ namespace roboptim
     /// \brief Apply stored parameters to the given solver.
     /// \tparam S solver type.
     /// \param solver solver to parametrize.
+    /// \param overwrite whether to completely overwrite the parameters.
     template <typename S>
-    void apply (S& solver) const
+    void apply (S& solver, bool overwrite = false) const
     {
-      // FIXME
-      solver.parameters () = parameters_;
+      if (overwrite)
+      {
+        // Replace the parameter map
+        solver.parameters () = parameters_;
+      }
+      else
+      {
+        // Update the parameter map
+        for (parameters_t::const_iterator
+             it  = parameters_.begin ();
+             it != parameters_.end ();
+             ++it)
+        {
+          solver.parameters ()[it->first] = it->second;
+        }
+      }
     }
 
-    /// \brief Reset stored parameters.
-    void reset ();
+    /// \brief Clear stored parameters.
+    void clear ();
 
     /// \brief Get the loaded parameters.
     const parameters_t& parameters () const;

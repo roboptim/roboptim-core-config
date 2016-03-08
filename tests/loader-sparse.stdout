@@ -8,6 +8,33 @@ Solver:
     No constraints.
     No starting point.
     Infinity value (for all functions): inf
+  Parameters:
+    dummy-parameter (dummy parameter): 42
+    dummy-parameter2 (yet another dummy parameter): 3
+    dummy-parameter3 (just a dummy key): ...and a dummy value!
+    dummy-parameter4: [4](1,2,3,4)
+    dummy-parameter5 (dummy boolean): false
+Solver:
+  Plugin: dummy-sparse
+  Problem:
+    Constant function
+      offset = [1](12)
+    Arguments bounds: (-inf, inf)
+    Arguments scaling: 1
+    No constraints.
+    No starting point.
+    Infinity value (for all functions): inf
+  Parameters:
+    dummy-bool: true
+    dummy-parameter (dummy parameter): 42
+    dummy-parameter2 (yet another dummy parameter): 3
+    dummy-parameter3 (just a dummy key): ...and a dummy value!
+    dummy-parameter4: [4](1,2,3,4)
+    dummy-parameter5 (dummy boolean): false
+    dummy-vector: [3](1,2,3)
+    ipopt.output_file: ipopt.log
+    ipopt.tol: 0.001
+    max-iterations: 100
 Solver:
   Plugin: dummy-sparse
   Problem:
@@ -24,3 +51,13 @@ Solver:
     ipopt.output_file: ipopt.log
     ipopt.tol: 0.001
     max-iterations: 100
+Solver:
+  Plugin: dummy-sparse
+  Problem:
+    Constant function
+      offset = [1](12)
+    Arguments bounds: (-inf, inf)
+    Arguments scaling: 1
+    No constraints.
+    No starting point.
+    Infinity value (for all functions): inf

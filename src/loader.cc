@@ -102,7 +102,7 @@ namespace roboptim
     return parameters_;
   }
 
-  void ConfigLoader::reset ()
+  void ConfigLoader::clear ()
   {
     parameters_.clear ();
   }

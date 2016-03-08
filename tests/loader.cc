@@ -52,7 +52,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   output = retrievePattern (std::string ("loader") + suffix<T> ());
 
   ConfigLoader loader;
-  loader.load (std::string (TESTS_DATA_DIR) + "/loader.yaml");
+  const std::string yaml_file = std::string (TESTS_DATA_DIR) + "/loader.yaml";
+  loader.load (yaml_file);
 
   typedef GenericConstantFunction<T> constantF_t;
   typename constantF_t::vector_t v (1);
@@ -66,10 +67,19 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   // Initialize solver.
   SolverFactory<solver_t> factory (std::string ("dummy") + suffix<T> (), pb);
   solver_t& solver = factory ();
-  solver.parameters ().clear ();
   (*output) << solver << std::endl;
 
   // Apply loaded parameters
+  loader.apply (solver);
+  (*output) << solver << std::endl;
+
+  // Overwrite all parameters
+  loader.apply (solver, true);
+  (*output) << solver << std::endl;
+
+  // Test clear
+  solver.parameters ().clear ();
+  loader.clear ();
   loader.apply (solver);
   (*output) << solver << std::endl;
 
