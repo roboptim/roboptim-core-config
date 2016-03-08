@@ -22,3 +22,8 @@ SET_TARGET_PROPERTIES(roboptim-core-config PROPERTIES
   COMPILE_FLAGS "-Droboptim_core_config_EXPORTS")
 PKG_CONFIG_USE_COMPILE_DEPENDENCY(roboptim-core-config roboptim-core)
 PKG_CONFIG_USE_DEPENDENCY(roboptim-core-config yaml-cpp)
+
+IF(NOT APPLE)
+  SET_TARGET_PROPERTIES(roboptim-core-config PROPERTIES SOVERSION 3 VERSION 3.2.0)
+ENDIF()
+INSTALL(TARGETS roboptim-core-config DESTINATION ${CMAKE_INSTALL_LIBDIR})
