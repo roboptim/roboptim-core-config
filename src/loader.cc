@@ -122,11 +122,11 @@ namespace roboptim
   ConfigLoader::loadParameter (const node_t& node) const
   {
     parameter_t param;
+    TRY_TYPE(bool);
+    TRY_TYPE(int);
     TRY_TYPE(double);
     TRY_TYPE(vector_t);
-    TRY_TYPE(int);
     TRY_TYPE(std::string);
-    TRY_TYPE(bool);
 
     return param;
   }

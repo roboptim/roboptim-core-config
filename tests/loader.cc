@@ -59,6 +59,36 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   ConfigLoader loader;
   loader.load (yaml_file);
 
+  ConfigLoader::parameters_t::const_iterator it;
+  typedef Function::vector_t vector_t;
+
+  // max-iterations: 100
+  it = loader.parameters ().find ("max-iterations");
+  BOOST_CHECK (it != loader.parameters ().end ());
+  BOOST_CHECK (boost::get<int> (it->second.value) == 100);
+
+  // dummy-bool: true
+  it = loader.parameters ().find ("dummy-bool");
+  BOOST_CHECK (it != loader.parameters ().end ());
+  BOOST_CHECK (boost::get<bool> (it->second.value) == true);
+
+  // dummy-vector: [1., 2., 3.]
+  it = loader.parameters ().find ("dummy-vector");
+  vector_t dummy_v (3);
+  dummy_v << 1., 2., 3.;
+  BOOST_CHECK (it != loader.parameters ().end ());
+  BOOST_CHECK (boost::get<vector_t> (it->second.value) == dummy_v);
+
+  // ipopt.tol: 1.e-3
+  it = loader.parameters ().find ("ipopt.tol");
+  BOOST_CHECK (it != loader.parameters ().end ());
+  BOOST_CHECK (boost::get<double> (it->second.value) == 1e-3);
+
+  // ipopt.output_file: ipopt.log
+  it = loader.parameters ().find ("ipopt.output_file");
+  BOOST_CHECK (it != loader.parameters ().end ());
+  BOOST_CHECK (boost::get<std::string> (it->second.value) == "ipopt.log");
+
   typedef GenericConstantFunction<T> constantF_t;
   typename constantF_t::vector_t v (1);
   v[0] = 12.;
