@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   ipopt_loader.apply (solver);
   (*output) << solver << std::endl;
 
-  // Try to load a configuration file that does not exists
+  // Try to load a configuration file that does not exist
   BOOST_CHECK_THROW (ipopt_loader.load ("dummy_file.yaml"), std::runtime_error);
 
   // Try to load an invalid yaml file

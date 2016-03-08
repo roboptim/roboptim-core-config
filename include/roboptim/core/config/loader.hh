@@ -33,6 +33,9 @@ namespace YAML
 namespace roboptim
 {
   /// \brief Solver configuration loader.
+  ///
+  /// This class relies on yaml-cpp to load a YAML file that contains a solver
+  /// configuration. It can then be applied to a given Solver.
   class ROBOPTIM_CORE_CONFIG_DLLAPI ConfigLoader
   {
   public:
@@ -47,11 +50,14 @@ namespace roboptim
     /// \brief Constructor.
     /// \param solverName optional solver name to filter parameters.
     ConfigLoader (const std::string& solverName = "");
-    virtual ~ConfigLoader ();
+
+    /// \brief Destructor.
+    ~ConfigLoader ();
 
     /// \brief Load parameters from a given YAML file.
     /// \param path path to a YAML file.
-    /// \throws TODO
+    /// \throws YAML::ParserException if the file is invalid.
+    /// \throws YAML::BadFile if the file does not exist.
     void load (const std::string& path);
 
     /// \brief Load parameters from a given YAML node.
