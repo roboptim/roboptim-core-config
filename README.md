@@ -53,5 +53,10 @@ ipopt:
   acceptable_iter: 10.
 ```
 
+### JSON support
+
+Since YAML is a superset of JSON, equivalent JSON configuration files are also
+supported.
+
 [badge-license]: https://img.shields.io/badge/license-LGPL_3-green.svg
 [yaml-cpp]: https://github.com/jbeder/yaml-cpp

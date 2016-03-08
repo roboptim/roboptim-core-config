@@ -49,16 +49,8 @@ std::string suffix<EigenMatrixSparse> ()
   return "-sparse";
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
+void testLoadedParameters (const ConfigLoader& loader)
 {
-  output = retrievePattern (std::string ("loader") + suffix<T> ());
-  const std::string yaml_file = std::string (TESTS_DATA_DIR) + "/loader.yaml";
-  const std::string invalid_yaml_file =
-    std::string (TESTS_DATA_DIR) + "/loader_invalid.yaml";
-
-  ConfigLoader loader;
-  loader.load (yaml_file);
-
   ConfigLoader::parameters_t::const_iterator it;
   typedef Function::vector_t vector_t;
 
@@ -88,6 +80,26 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   it = loader.parameters ().find ("ipopt.output_file");
   BOOST_CHECK (it != loader.parameters ().end ());
   BOOST_CHECK (boost::get<std::string> (it->second.value) == "ipopt.log");
+
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
+{
+  output = retrievePattern (std::string ("loader") + suffix<T> ());
+  const std::string yaml_file = std::string (TESTS_DATA_DIR) + "/loader.yaml";
+  const std::string json_file = std::string (TESTS_DATA_DIR) + "/loader.json";
+  const std::string invalid_yaml_file =
+    std::string (TESTS_DATA_DIR) + "/loader_invalid.yaml";
+
+  // Test yaml file
+  ConfigLoader loader;
+  loader.load (yaml_file);
+  testLoadedParameters (loader);
+
+  // Test equivalent JSON file
+  loader.clear ();
+  loader.load (json_file);
+  testLoadedParameters (loader);
 
   typedef GenericConstantFunction<T> constantF_t;
   typename constantF_t::vector_t v (1);

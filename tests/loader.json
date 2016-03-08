@@ -1,0 +1,13 @@
+{
+  "max-iterations": 100,
+  "dummy-vector": [ 1, 2, 3 ],
+  "dummy-bool": true,
+  "knitro": {
+    "xtol": 1e-4,
+    "hessopt": "HESSOPT_BFGS"
+  },
+  "ipopt": {
+    "output_file": "ipopt.log",
+    "tol": 1e-3
+  }
+}

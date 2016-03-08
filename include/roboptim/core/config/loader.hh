@@ -54,8 +54,8 @@ namespace roboptim
     /// \brief Destructor.
     ~ConfigLoader ();
 
-    /// \brief Load parameters from a given YAML file.
-    /// \param path path to a YAML file.
+    /// \brief Load parameters from a given YAML/JSON file.
+    /// \param path path to a YAML or JSON file.
     /// \throws YAML::ParserException if the file is invalid.
     /// \throws YAML::BadFile if the file does not exist.
     void load (const std::string& path);
