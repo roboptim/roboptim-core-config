@@ -1,3 +1,4 @@
+sudo: required
 language: cpp
 env:
   global:
@@ -27,6 +28,7 @@ before_install:
   - ./.travis/dependencies/eigen-3.2
   - ./.travis/run before_install
 script:
+  - export LD_LIBRARY_PATH="/tmp/_ci/install/lib/roboptim-core/":$LD_LIBRARY_PATH
   - ./.travis/run build
 after_success:
   - ./.travis/run after_success
@@ -35,8 +37,6 @@ after_failure: ./.travis/run after_failure
 
 matrix:
   allow_failures:
-    - compiler: clang
-    - env: COVERITY_SCAN_BRANCH=1
     - os: osx
   include:
     - os: linux
@@ -44,12 +44,6 @@ matrix:
       compiler: gcc
     - os: linux
       dist: trusty
-      compiler: clang
-    - os: linux
-      dist: precise
-      compiler: gcc
-    - os: linux
-      dist: precise
       compiler: clang
     - os: osx
       compiler: clang
