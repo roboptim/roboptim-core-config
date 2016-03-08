@@ -17,5 +17,41 @@ This package uses the following extra external tools compared to roboptim-core:
 
  * [yaml-cpp][] a YAML parser and emitter in C++
 
+### YAML configuration example
+
+Configuration files are organized as follows:
+
+```yaml
+# Shared RobOptim parameters
+max-iterations: 10
+
+# Parameters specific to Ipopt
+ipopt:
+  output_file: "ipopt.out"
+  linear_solver: "ma57"
+  tol: 1.e-3
+  constr_viol_tol: 1.e-4
+  acceptable_iter: 1
+
+# Parameters specific to KNITRO
+knitro:
+  xtol: 1.e-5
+  feastol: 1.e-3
+```
+
+Note that since RobOptim's solver parameters are stored as `boost::variant`
+objects, great care needs to be taken when writing the configuration files. For
+instance:
+
+```yaml
+# Parameters specific to Ipopt
+ipopt:
+  # This is treated as an integer (as expected):
+  acceptable_iter: 10
+
+  # This is treated as a double (which is wrong!):
+  acceptable_iter: 10.
+```
+
 [badge-license]: https://img.shields.io/badge/license-LGPL_3-green.svg
 [yaml-cpp]: https://github.com/jbeder/yaml-cpp
