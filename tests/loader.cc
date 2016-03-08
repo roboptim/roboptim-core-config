@@ -17,6 +17,8 @@
 
 #include "shared-tests/fixture.hh"
 
+#include <stdexcept>
+
 #include <boost/make_shared.hpp>
 
 #include <roboptim/core/function.hh>
@@ -51,6 +53,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
 {
   output = retrievePattern (std::string ("loader") + suffix<T> ());
   const std::string yaml_file = std::string (TESTS_DATA_DIR) + "/loader.yaml";
+  const std::string invalid_yaml_file =
+    std::string (TESTS_DATA_DIR) + "/loader_invalid.yaml";
 
   ConfigLoader loader;
   loader.load (yaml_file);
@@ -89,6 +93,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   solver.parameters ().clear ();
   ipopt_loader.apply (solver);
   (*output) << solver << std::endl;
+
+  // Try to load a configuration file that does not exists
+  BOOST_CHECK_THROW (ipopt_loader.load ("dummy_file.yaml"), std::runtime_error);
+
+  // Try to load an invalid yaml file
+  BOOST_CHECK_THROW (ipopt_loader.load (invalid_yaml_file), std::runtime_error);
 
   std::cout << output->str () << std::endl;
   BOOST_CHECK (output->match_pattern ());
