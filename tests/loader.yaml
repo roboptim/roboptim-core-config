@@ -7,11 +7,12 @@ dummy-vector: [1., 2., 3.]
 # A dummy boolean
 dummy-bool: true
 
+# KNITRO parameters
+knitro:
+    xtol: 1.e-4
+    hessopt: "HESSOPT_BFGS"
+
 # Ipopt parameters
 ipopt:
-
-    # Output file
     output_file: "ipopt.log"
-
-    # Tolerance
     tol: 1.e-3

@@ -50,9 +50,9 @@ std::string suffix<EigenMatrixSparse> ()
 BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
 {
   output = retrievePattern (std::string ("loader") + suffix<T> ());
+  const std::string yaml_file = std::string (TESTS_DATA_DIR) + "/loader.yaml";
 
   ConfigLoader loader;
-  const std::string yaml_file = std::string (TESTS_DATA_DIR) + "/loader.yaml";
   loader.load (yaml_file);
 
   typedef GenericConstantFunction<T> constantF_t;
@@ -81,6 +81,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE (loader, T, functionTypes_t)
   solver.parameters ().clear ();
   loader.clear ();
   loader.apply (solver);
+  (*output) << solver << std::endl;
+
+  // Load only ipopt-related parameters
+  ConfigLoader ipopt_loader ("ipopt");
+  ipopt_loader.load (yaml_file);
+  solver.parameters ().clear ();
+  ipopt_loader.apply (solver);
   (*output) << solver << std::endl;
 
   std::cout << output->str () << std::endl;

@@ -34,6 +34,8 @@ Solver:
     dummy-vector: [3](1,2,3)
     ipopt.output_file: ipopt.log
     ipopt.tol: 0.001
+    knitro.hessopt: HESSOPT_BFGS
+    knitro.xtol: 0.0001
     max-iterations: 100
 Solver:
   Plugin: dummy
@@ -50,6 +52,8 @@ Solver:
     dummy-vector: [3](1,2,3)
     ipopt.output_file: ipopt.log
     ipopt.tol: 0.001
+    knitro.hessopt: HESSOPT_BFGS
+    knitro.xtol: 0.0001
     max-iterations: 100
 Solver:
   Plugin: dummy
@@ -61,3 +65,19 @@ Solver:
     No constraints.
     No starting point.
     Infinity value (for all functions): inf
+Solver:
+  Plugin: dummy
+  Problem:
+    Constant function
+      offset = [1](12)
+    Arguments bounds: (-inf, inf)
+    Arguments scaling: 1
+    No constraints.
+    No starting point.
+    Infinity value (for all functions): inf
+  Parameters:
+    dummy-bool: true
+    dummy-vector: [3](1,2,3)
+    ipopt.output_file: ipopt.log
+    ipopt.tol: 0.001
+    max-iterations: 100

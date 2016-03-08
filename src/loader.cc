@@ -63,28 +63,31 @@ namespace roboptim
       throw std::runtime_error
         ("roboptim configuration should be a map");
 
-    std::string key;
+    std::string key, full_key;
 
     typedef YAML::const_iterator citer_t;
     for (citer_t it = root.begin (); it != root.end (); ++it)
     {
+      key = it->first.as<std::string> ();
       if (prefix.empty ())
-        key = it->first.as<std::string> ();
-      else key = prefix + "." + it->first.as<std::string> ();
+        full_key = key;
+      else full_key = prefix + "." + key;
 
       switch (it->second.Type ())
       {
         case YAML::NodeType::Scalar:
         case YAML::NodeType::Sequence:
         {
-          parameters_[key] = loadParameter (it->second);
+          parameters_[full_key] = loadParameter (it->second);
         }
         break;
 
         // recursive call
         case YAML::NodeType::Map:
         {
-          load (it->second, key);
+          // Only load solver-specific parameters if they are not filtered
+          if (solverName_.empty () || key == solverName_)
+            load (it->second, full_key);
         }
         break;
 
